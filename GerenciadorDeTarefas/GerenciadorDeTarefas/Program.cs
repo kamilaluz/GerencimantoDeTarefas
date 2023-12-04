@@ -1,6 +1,7 @@
 ﻿using GerenciadorDeTarefas.Classes;
 using GerenciadorDeTarefas.Enum;
 using System.Globalization;
+using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
 
 namespace GerenciadorDeTarefas
@@ -30,14 +31,14 @@ namespace GerenciadorDeTarefas
                         Console.WriteLine("Opção inválida! Tente novamente: ");
                     }
                 } while (opcaoCorreta);
-                
+
                 Console.WriteLine();
                 switch (opcao)
                 {
                     case 1:
                         //Adicionar tarefa
                         Console.Clear();
-                        AdicionarTarefa(); 
+                        AdicionarTarefa();
                         Console.Clear();
                         Console.WriteLine("\n\nDeseja realizar outra operação? \n=> Enter para continuar\n=> 0 para encerrar");
                         Console.ReadKey();
@@ -202,24 +203,27 @@ namespace GerenciadorDeTarefas
                                     Console.WriteLine($"2. Fazendo");
                                     Console.WriteLine($"3. Concluída");
                                     Console.WriteLine($"4. Cancelada");
-                                    int status = int.Parse( Console.ReadLine());
+                                    int status = int.Parse(Console.ReadLine());
                                     if (status == 1)
                                     {
                                         tarefa.Status = Enum.status.Pendente;
-                                    } else if (status == 2)
+                                    }
+                                    else if (status == 2)
                                     {
                                         tarefa.Status = Enum.status.Fazendo;
 
-                                    }else if (status == 3)
+                                    }
+                                    else if (status == 3)
                                     {
                                         tarefa.Status = Enum.status.Concluída;
-                                    } else
+                                    }
+                                    else
                                     {
                                         tarefa.Status = Enum.status.Cancelada;
                                     }
                                     Console.WriteLine("Status alterado com sucesso!");
                                     break;
-                                default: 
+                                default:
                                     Console.WriteLine("Opção inválida!");
                                     break;
                             }
@@ -287,20 +291,31 @@ namespace GerenciadorDeTarefas
                 }
             }
 
+
             void SalvarTarefa()
             {
                 string arquivoTarefas = "C:\\Users\\kamil\\OneDrive\\Estudo\\C# - Entra21\\CSharp avançado\\Trabalho 01 - Gerenciamento de tarefas\\GerenciadorDeTarefas\\Arquivos\\dados.txt";
-
 
                 if (listaTarefas != null)
                 {
                     foreach (var tarefa in listaTarefas.tarefas)
                     {
-                        File.AppendAllText(arquivoTarefas, ($"\nDetalhes da tarefa: \nTítulo: {tarefa.Titulo} \nDescrição: {tarefa.Descricao} \nData de conclusão: {tarefa.DataDeConclusao} \nStatus: {tarefa.Status} \n{VisualizarTarefa()}"));
+                        using (StreamWriter salvar = new StreamWriter(arquivoTarefas, true))
+                        {
+                            salvar.WriteLine($"\nDetalhes da tarefa:");
+                            salvar.WriteLine($"Título: {tarefa.Titulo}");
+                            salvar.WriteLine($"Descrição: {tarefa.Descricao}");
+                            salvar.WriteLine($"Data de conclusão: {tarefa.DataDeConclusao}");
+                            salvar.WriteLine($"Status: {tarefa.Status}");
+                            salvar.WriteLine(tarefa.StatusVencimento());
+                            salvar.Close();
+                            Console.WriteLine("Tarefa salva com sucesso!");
+                        }
                     }
-                } else
+                }
+                else
                 {
-                    Console.WriteLine("Não há nada para salvar.");
+                    Console.WriteLine("Nenhuma tarefa salva.");
                 }
             }
         }
