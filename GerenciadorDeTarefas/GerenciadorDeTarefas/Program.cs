@@ -287,18 +287,16 @@ namespace GerenciadorDeTarefas
                 }
             }
 
-
-            
-
             void SalvarTarefa()
             {
                 string arquivoTarefas = "C:\\Users\\kamil\\OneDrive\\Estudo\\C# - Entra21\\CSharp avançado\\Trabalho 01 - Gerenciamento de tarefas\\GerenciadorDeTarefas\\Arquivos\\dados.txt";
+
 
                 if (listaTarefas != null)
                 {
                     foreach (var tarefa in listaTarefas.tarefas)
                     {
-                        File.WriteAllText(arquivoTarefas, ($"\nDetalhes da tarefa: \nTítulo: {tarefa.Titulo} \nDescrição: {tarefa.Descricao} \nData de conclusão: {tarefa.DataDeConclusao} \nStatus: {tarefa.Status} \n{tarefa.VisualizarTarefa}"));
+                        File.AppendAllText(arquivoTarefas, ($"\nDetalhes da tarefa: \nTítulo: {tarefa.Titulo} \nDescrição: {tarefa.Descricao} \nData de conclusão: {tarefa.DataDeConclusao} \nStatus: {tarefa.Status} \n{VisualizarTarefa()}"));
                     }
                 } else
                 {

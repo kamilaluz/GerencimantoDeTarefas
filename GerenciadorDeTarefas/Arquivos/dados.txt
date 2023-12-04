@@ -1,0 +1,7 @@
+
+Detalhes da tarefa: 
+Título: Secar o cabelo 
+Descrição: Usar o difusor 
+Data de conclusão: 04/12/2023 00:00:00 
+Status: Fazendo 
+System.Action
