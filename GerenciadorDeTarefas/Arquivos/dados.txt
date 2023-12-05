@@ -1,0 +1,14 @@
+
+Detalhes da tarefa:
+Título: Ler
+Descrição: Livro
+Data de conclusão: 31/12/2023 00:00:00
+Status: Pendente
+Continue a trabalhar na tarefa!
+
+Detalhes da tarefa:
+Título: Ler
+Descrição: Livro
+Data de conclusão: 31/12/2023 00:00:00
+Status: Pendente
+Continue a trabalhar na tarefa!
