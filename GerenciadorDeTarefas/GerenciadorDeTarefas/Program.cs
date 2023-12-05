@@ -125,7 +125,7 @@ namespace GerenciadorDeTarefas
                         Console.WriteLine("Tarefa adicionada com sucesso!");
                         continuar = true;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         Console.WriteLine($"Formato inválido, digite novamente (formato dd/mm/aaaa)");
                         continuar = false;
@@ -251,13 +251,16 @@ namespace GerenciadorDeTarefas
                     }
                     int numeroTarefa = int.Parse(Console.ReadLine());
 
-                    foreach (var tarefa in listaTarefas.tarefas)
+                    foreach (var tarefa in listaTarefas.tarefas.ToList())
                     {
                         if (listaTarefas.tarefas.IndexOf(tarefa) == (numeroTarefa - 1))
                         {
                             listaTarefas.tarefas.Remove(tarefa);
+                            Console.Write("Tarefa excluída com sucesso!");
                         }
                     }
+
+
                 }
 
             }
@@ -294,29 +297,49 @@ namespace GerenciadorDeTarefas
 
             void SalvarTarefa()
             {
-                string arquivoTarefas = "C:\\Users\\kamil\\OneDrive\\Estudo\\C# - Entra21\\CSharp avançado\\Trabalho 01 - Gerenciamento de tarefas\\GerenciadorDeTarefas\\Arquivos\\dados.txt";
-
-                if (listaTarefas != null)
+                bool salvandoTarefa = true;
+                do
                 {
-                    foreach (var tarefa in listaTarefas.tarefas)
+                    try
                     {
-                        using (StreamWriter salvar = new StreamWriter(arquivoTarefas, true))
+                        Console.WriteLine("Informe o diretório onde seu arquivo será salvo: ");
+                        string resposta = Console.ReadLine();
+                        string arquivoTarefas = (resposta + "\\dados.txt");
+                        if (listaTarefas != null)
                         {
-                            salvar.WriteLine($"\nDetalhes da tarefa:");
-                            salvar.WriteLine($"Título: {tarefa.Titulo}");
-                            salvar.WriteLine($"Descrição: {tarefa.Descricao}");
-                            salvar.WriteLine($"Data de conclusão: {tarefa.DataDeConclusao}");
-                            salvar.WriteLine($"Status: {tarefa.Status}");
-                            salvar.WriteLine(tarefa.StatusVencimento());
-                            salvar.Close();
-                            Console.WriteLine("Tarefa salva com sucesso!");
+                            foreach (var tarefa in listaTarefas.tarefas)
+                            {
+                                using (StreamWriter salvar = new StreamWriter(arquivoTarefas, true))
+                                {
+                                    salvar.WriteLine($"\nDetalhes da tarefa:");
+                                    salvar.WriteLine($"Título: {tarefa.Titulo}");
+                                    salvar.WriteLine($"Descrição: {tarefa.Descricao}");
+                                    salvar.WriteLine($"Data de conclusão: {tarefa.DataDeConclusao}");
+                                    salvar.WriteLine($"Status: {tarefa.Status}");
+                                    salvar.WriteLine(tarefa.StatusVencimento());
+                                    salvar.Close();
+                                    Console.WriteLine("Tarefa salva com sucesso!");
+                                }
+                            }
                         }
+                        else
+                        {
+                            Console.WriteLine("Nenhuma tarefa salva.");
+                        }
+                        salvandoTarefa = false;
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Nenhuma tarefa salva.");
-                }
+                    catch (DirectoryNotFoundException)
+                    {
+                        Console.WriteLine("Diretório não encontrado!");
+                    } catch (UnauthorizedAccessException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                } while (salvandoTarefa == true);
+                
+                
+
+                
             }
         }
     }
