@@ -1,7 +1,4 @@
-<h1> Trabalho de C# Avançado</h1>
  <h2>Sistema de Gerenciamento de Tarefas</h2>
-
- <p>Você foi contratado para desenvolver um sistema de gerenciamento de tarefas pessoais ou profissionais. Este sistema, uma aplicação de console em C#, ajudará os usuários a manterem suas tarefas organizadas, com funcionalidades para adicionar, editar, remover e visualizar tarefas, bem como salvar essas tarefas em um arquivo .txt.</p>
 
 <strong>Requisitos do Sistema:</strong>
 <p>Interface de Usuário em Console:</p>
